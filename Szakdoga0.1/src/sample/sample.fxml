@@ -7,19 +7,18 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.layout.HBox?>
 <BorderPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.121" fx:controller="sample.Controller">
     <top>
-        <VBox>
+        <HBox>
             <Button fx:id="openfilebtn" onAction="#handleOpenfilebtn" text="Open File" />
-        </VBox>
+        </HBox>
     </top>
     <center>
         <StackPane>
-            <ScrollPane>
-                <ImageView fx:id="mainimgview" onMouseDragged="#handleMouseDrag" onMousePressed="#handleMouseClick">
+                <ImageView fx:id="mainimgview" onMouseDragged="#handleMouseDrag" onMousePressed="#handleMouseClick" onScroll="#handleScroll">
 
                 </ImageView>
-            </ScrollPane>
         </StackPane>
     </center>
     <left>

@@ -15,11 +15,9 @@
     </top>
     <center>
         <StackPane>
-            <ScrollPane>
-                <ImageView fx:id="mainimgview" onMouseDragged="#handleMouseDrag" onMousePressed="#handleMouseClick">
+                <ImageView fx:id="mainimgview" onMouseDragged="#handleMouseDrag" onMousePressed="#handleMouseClick" onScroll="#handleScroll">
 
                 </ImageView>
-            </ScrollPane>
         </StackPane>
     </center>
     <left>

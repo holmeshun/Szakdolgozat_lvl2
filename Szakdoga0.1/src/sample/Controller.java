@@ -8,6 +8,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ScrollEvent;
 import javafx.stage.FileChooser;
 
 import java.io.File;
@@ -70,6 +71,19 @@ public class Controller {
 
         ((ImageView)(event.getSource())).setTranslateX(newTranslateX);
         ((ImageView)(event.getSource())).setTranslateY(newTranslateY);
+    }
+
+    public void handleScroll(ScrollEvent e){
+        System.out.println(mainimgview.getScaleX());
+        if (e.getDeltaY()>0) {
+            mainimgview.setScaleX(mainimgview.getScaleX()+0.05);
+            mainimgview.setScaleY(mainimgview.getScaleY()+0.05);
+        }
+        else if (mainimgview.getScaleX()>0.1){
+            mainimgview.setScaleX(mainimgview.getScaleX()-0.05);
+            mainimgview.setScaleY(mainimgview.getScaleY()-0.05);
+        }
+
     }
 
 
