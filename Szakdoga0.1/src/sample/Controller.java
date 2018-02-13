@@ -2,6 +2,7 @@ package sample;
 
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.NodeOrientation;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
@@ -10,6 +11,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 import java.io.File;
 import java.net.MalformedURLException;
@@ -24,6 +26,8 @@ public class Controller {
     ImageView mainimgview = new ImageView();
     @FXML
     ImageView smallimgview = new ImageView();
+    @FXML
+    Button exitbtn = new Button();
 
     // Egyéb változók ------------------------------------
     FileChooser fileChooser = new FileChooser();
@@ -84,6 +88,11 @@ public class Controller {
             mainimgview.setScaleY(mainimgview.getScaleY()-0.05);
         }
 
+    }
+
+    public void handleExitbtn(){
+        Stage stage = (Stage) exitbtn.getScene().getWindow();
+        stage.close();
     }
 
 
