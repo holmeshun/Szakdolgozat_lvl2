@@ -1,27 +1,32 @@
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.layout.GridPane?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.ImageView?>
-<BorderPane fx:controller="sample.Controller"
-            xmlns:fx="http://javafx.com/fxml" >
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.121" fx:controller="sample.Controller">
     <top>
         <VBox>
-            <Button text="Open File" fx:id="openfilebtn" onAction="#handleOpenfilebtn" />
+            <Button fx:id="openfilebtn" onAction="#handleOpenfilebtn" text="Open File" />
         </VBox>
     </top>
     <center>
         <StackPane>
             <ScrollPane>
-                <ImageView fx:id="mainimgview" onMousePressed="#handleMouseClick" onMouseDragged="#handleMouseDrag">
+                <ImageView fx:id="mainimgview" onMouseDragged="#handleMouseDrag" onMousePressed="#handleMouseClick">
 
                 </ImageView>
             </ScrollPane>
         </StackPane>
     </center>
+    <left>
+        <VBox>
+            <ImageView fx:id="smallimgview">
+
+            </ImageView>
+        </VBox>
+    </left>
 </BorderPane>
