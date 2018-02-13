@@ -1,0 +1,27 @@
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.GridPane?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.ImageView?>
+<BorderPane fx:controller="sample.Controller"
+            xmlns:fx="http://javafx.com/fxml" >
+    <top>
+        <VBox>
+            <Button text="Open File" fx:id="openfilebtn" onAction="#handleOpenfilebtn" />
+        </VBox>
+    </top>
+    <center>
+        <StackPane>
+            <ScrollPane>
+                <ImageView fx:id="mainimgview" onMousePressed="#handleMouseClick" onMouseDragged="#handleMouseDrag">
+
+                </ImageView>
+            </ScrollPane>
+        </StackPane>
+    </center>
+</BorderPane>
