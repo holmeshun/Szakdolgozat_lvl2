@@ -22,4 +22,11 @@
             </ScrollPane>
         </StackPane>
     </center>
+    <left>
+        <VBox>
+            <ImageView fx:id="smallimgview">
+
+            </ImageView>
+        </VBox>
+    </left>
 </BorderPane>

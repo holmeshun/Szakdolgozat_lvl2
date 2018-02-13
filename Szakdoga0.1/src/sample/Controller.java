@@ -21,6 +21,8 @@ public class Controller {
     Button openfilebtn = new Button();
     @FXML
     ImageView mainimgview = new ImageView();
+    @FXML
+    ImageView smallimgview = new ImageView();
 
     // Egyéb változók ------------------------------------
     FileChooser fileChooser = new FileChooser();
@@ -32,12 +34,13 @@ public class Controller {
     double orgTranslateX, orgTranslateY;
 
     public void initialize() {
+        smallimgview.setFitHeight(100);
+        smallimgview.setFitWidth(100);
         fileChooser.getExtensionFilters().addAll(extensionFilterJPG, extensionFilterPNG,extensionFilterJPEG);
         fileChooser.setSelectedExtensionFilter(extensionFilterPNG);
         fileChooser.setTitle("Choose your file");
         File initialFile = new File("src");
-        File initialDirectory = new File(initialFile.getPath());
-        fileChooser.setInitialDirectory(initialDirectory);
+        fileChooser.setInitialDirectory(initialFile);
     }
 
     public void handleOpenfilebtn(){
@@ -45,6 +48,7 @@ public class Controller {
         try {
             Image pictureImg = new Image(pictureFile.toURI().toURL().toString());
             mainimgview.setImage(pictureImg);
+            smallimgview.setImage(pictureImg);
         }
         catch (MalformedURLException ex){
             System.err.println("Malformed URL Exception!");
@@ -67,5 +71,7 @@ public class Controller {
         ((ImageView)(event.getSource())).setTranslateX(newTranslateX);
         ((ImageView)(event.getSource())).setTranslateY(newTranslateY);
     }
+
+
 
 }
