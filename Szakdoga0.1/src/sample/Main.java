@@ -14,6 +14,7 @@ public class Main extends Application {
         primaryStage.setTitle("SzakdogaProject0.2");
         primaryStage.setScene(new Scene(root, 1000, 820));
         primaryStage.show();
+        primaryStage.setMaximized(true);
     }
 
 

@@ -8,27 +8,27 @@
 <?import javafx.scene.layout.VBox?>
 
 <?import javafx.scene.shape.Rectangle?>
+<?import javafx.geometry.Insets?>
 <BorderPane xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
     <top>
-        <HBox>
-            <Button fx:id="openfilebtn" onAction="#handleOpenfilebtn" text="Open File" />
-            <Button fx:id="exitbtn" alignment="CENTER_RIGHT" onAction="#handleExitbtn" text="Exit" />
+        <HBox spacing="10" >
+                <Button fx:id="openfilebtn" onAction="#handleOpenfilebtn" text="Open File" />
+                <Button fx:id="exitbtn" alignment="CENTER_RIGHT" onAction="#handleExitbtn" text="Exit" />
+            <padding>
+                <Insets left="5" right="5" top="5"/>
+            </padding>
         </HBox>
     </top>
     <center>
         <StackPane>
-                <ImageView fx:id="mainimgview" onMouseDragged="#handleMouseDrag" onMousePressed="#handleMouseClick" onScroll="#handleScroll">
-
-                </ImageView>
+                <ImageView fx:id="mainimgview" onMouseDragged="#handleMouseDrag" onMousePressed="#handleMouseClick" onScroll="#handleScroll"/>
         </StackPane>
     </center>
     <left>
         <VBox>
             <StackPane>
-                <ImageView fx:id="smallimgview">
-
-                </ImageView>
-                <Rectangle fx:id="rectangle" width="16" height="9" />
+                <ImageView fx:id="smallimgview"/>
+                <Rectangle fx:id="rectangle" width="128" height="72" />
             </StackPane>
         </VBox>
     </left>

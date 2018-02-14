@@ -1,5 +1,6 @@
 package sample;
 
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.NodeOrientation;
@@ -45,11 +46,14 @@ public class Controller {
     double orgTranslateX, orgTranslateY;
     double rectorgTranslateX, rectorgTranslateY;
 
+    double smallScaleX, smallScaleY;
+
+    double zoomLocationX, zoomLocationY;
+
     public void initialize() {
         rectangle.setFill(Color.TRANSPARENT);
         rectangle.setStroke(Color.RED);
-        smallimgview.setFitHeight(90);
-        smallimgview.setFitWidth(160);
+        rectangle.setVisible(false);
         fileChooser.getExtensionFilters().addAll(extensionFilterJPG, extensionFilterPNG,extensionFilterJPEG);
         fileChooser.setSelectedExtensionFilter(extensionFilterPNG);
         fileChooser.setTitle("Choose your file");
@@ -63,6 +67,11 @@ public class Controller {
             Image pictureImg = new Image(pictureFile.toURI().toURL().toString());
             mainimgview.setImage(pictureImg);
             smallimgview.setImage(pictureImg);
+            rectangle.setVisible(true);
+            smallimgview.setFitHeight(mainimgview.getImage().getHeight()/10);
+            smallimgview.setFitWidth(mainimgview.getImage().getWidth()/10);
+            smallScaleX = smallimgview.getFitWidth()/mainimgview.getImage().getWidth();
+            smallScaleY = smallimgview.getFitHeight()/mainimgview.getImage().getHeight();
         }
         catch (MalformedURLException ex){
             System.err.println("Malformed URL Exception!");
@@ -83,8 +92,8 @@ public class Controller {
         double offsetY = event.getSceneY() - orgSceneY;
         double newTranslateX = orgTranslateX + offsetX;
         double newTranslateY = orgTranslateY + offsetY;
-        double rectnewTranslateX = rectorgTranslateX + offsetX*0.07041924650516172;
-        double rectnewTranslateY = rectorgTranslateY + offsetY*0.07041924650516172;
+        double rectnewTranslateX = rectorgTranslateX - offsetX*smallScaleX;
+        double rectnewTranslateY = rectorgTranslateY - offsetY*smallScaleY;
 
         ((ImageView)(event.getSource())).setTranslateX(newTranslateX);
         ((ImageView)(event.getSource())).setTranslateY(newTranslateY);
@@ -93,14 +102,17 @@ public class Controller {
     }
 
     public void handleScroll(ScrollEvent e){
-        System.out.println(mainimgview.getScaleX());
         if (e.getDeltaY()>0) {
-            mainimgview.setScaleX(mainimgview.getScaleX()+0.05*mainimgview.getScaleX());
-            mainimgview.setScaleY(mainimgview.getScaleY()+0.05*mainimgview.getScaleY());
+            mainimgview.setScaleX(mainimgview.getScaleX()+0.25*mainimgview.getScaleX());
+            mainimgview.setScaleY(mainimgview.getScaleY()+0.25*mainimgview.getScaleY());
+            mainimgview.setTranslateX(zoomLocationX);
+            mainimgview.setTranslateY(zoomLocationY);
         }
-        else if (mainimgview.getScaleX()>0.1){
-            mainimgview.setScaleX(mainimgview.getScaleX()-0.05*mainimgview.getScaleX());
-            mainimgview.setScaleY(mainimgview.getScaleY()-0.05*mainimgview.getScaleY());
+        else{
+            mainimgview.setScaleX(mainimgview.getScaleX()-0.25*mainimgview.getScaleX());
+            mainimgview.setScaleY(mainimgview.getScaleY()-0.25*mainimgview.getScaleY());
+            mainimgview.setTranslateX(zoomLocationX);
+            mainimgview.setTranslateY(zoomLocationY);
         }
 
     }
@@ -109,7 +121,5 @@ public class Controller {
         Stage stage = (Stage) exitbtn.getScene().getWindow();
         stage.close();
     }
-
-
 
 }
