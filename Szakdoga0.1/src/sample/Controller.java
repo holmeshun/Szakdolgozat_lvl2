@@ -3,6 +3,7 @@ package sample;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.NodeOrientation;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
@@ -10,6 +11,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -28,6 +31,9 @@ public class Controller {
     ImageView smallimgview = new ImageView();
     @FXML
     Button exitbtn = new Button();
+    @FXML
+    Rectangle rectangle;
+
 
     // Egyéb változók ------------------------------------
     FileChooser fileChooser = new FileChooser();
@@ -37,10 +43,13 @@ public class Controller {
 
     double orgSceneX, orgSceneY;
     double orgTranslateX, orgTranslateY;
+    double rectorgTranslateX, rectorgTranslateY;
 
     public void initialize() {
-        smallimgview.setFitHeight(100);
-        smallimgview.setFitWidth(100);
+        rectangle.setFill(Color.TRANSPARENT);
+        rectangle.setStroke(Color.RED);
+        smallimgview.setFitHeight(90);
+        smallimgview.setFitWidth(160);
         fileChooser.getExtensionFilters().addAll(extensionFilterJPG, extensionFilterPNG,extensionFilterJPEG);
         fileChooser.setSelectedExtensionFilter(extensionFilterPNG);
         fileChooser.setTitle("Choose your file");
@@ -65,6 +74,8 @@ public class Controller {
         orgSceneY = event.getSceneY();
         orgTranslateX = ((ImageView)(event.getSource())).getTranslateX();
         orgTranslateY = ((ImageView)(event.getSource())).getTranslateY();
+        rectorgTranslateX = rectangle.getTranslateX();
+        rectorgTranslateY = rectangle.getTranslateY();
     }
 
     public void handleMouseDrag(MouseEvent event){
@@ -72,20 +83,24 @@ public class Controller {
         double offsetY = event.getSceneY() - orgSceneY;
         double newTranslateX = orgTranslateX + offsetX;
         double newTranslateY = orgTranslateY + offsetY;
+        double rectnewTranslateX = rectorgTranslateX + offsetX*0.07041924650516172;
+        double rectnewTranslateY = rectorgTranslateY + offsetY*0.07041924650516172;
 
         ((ImageView)(event.getSource())).setTranslateX(newTranslateX);
         ((ImageView)(event.getSource())).setTranslateY(newTranslateY);
+        rectangle.setTranslateX(rectnewTranslateX);
+        rectangle.setTranslateY(rectnewTranslateY);
     }
 
     public void handleScroll(ScrollEvent e){
         System.out.println(mainimgview.getScaleX());
         if (e.getDeltaY()>0) {
-            mainimgview.setScaleX(mainimgview.getScaleX()+0.05);
-            mainimgview.setScaleY(mainimgview.getScaleY()+0.05);
+            mainimgview.setScaleX(mainimgview.getScaleX()+0.05*mainimgview.getScaleX());
+            mainimgview.setScaleY(mainimgview.getScaleY()+0.05*mainimgview.getScaleY());
         }
         else if (mainimgview.getScaleX()>0.1){
-            mainimgview.setScaleX(mainimgview.getScaleX()-0.05);
-            mainimgview.setScaleY(mainimgview.getScaleY()-0.05);
+            mainimgview.setScaleX(mainimgview.getScaleX()-0.05*mainimgview.getScaleX());
+            mainimgview.setScaleY(mainimgview.getScaleY()-0.05*mainimgview.getScaleY());
         }
 
     }

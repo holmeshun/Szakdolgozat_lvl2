@@ -7,6 +7,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.shape.Rectangle?>
 <BorderPane xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
     <top>
         <HBox>
@@ -23,9 +24,12 @@
     </center>
     <left>
         <VBox>
-            <ImageView fx:id="smallimgview">
+            <StackPane>
+                <ImageView fx:id="smallimgview">
 
-            </ImageView>
+                </ImageView>
+                <Rectangle fx:id="rectangle" width="16" height="9" />
+            </StackPane>
         </VBox>
     </left>
 </BorderPane>
