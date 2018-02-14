@@ -1,0 +1,10 @@
+-rectangle helye
+-rectangle mérete
+-kép ne tudjon túlcsúszni a széleken
+-kép ne tudjon a gombok elé kerülni
+-rectangle nagyítása/kicsinyítése
+-kép a kurzorra nagyítson
+-escape button jobb oldalt legyen
+-esetleges nagítás slider
+-esetleges koordináták
+-esetleges négyzetrács háló
