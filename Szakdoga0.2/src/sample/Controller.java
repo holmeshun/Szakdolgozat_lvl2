@@ -3,6 +3,7 @@ package sample;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -15,6 +16,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import javax.swing.*;
 import java.io.File;
 import java.net.MalformedURLException;
 
@@ -31,6 +33,8 @@ public class Controller {
     Button exitbtn = new Button();
     @FXML
     Rectangle rectangle;
+    @FXML
+    Slider zoomslider;
 
 
 
@@ -64,13 +68,17 @@ public class Controller {
             Image pictureImg = new Image(pictureFile.toURI().toURL().toString());
             mainimgview.setImage(pictureImg);
             smallimgview.setImage(pictureImg);
+            mainimgview.setFitWidth(1920);
+            mainimgview.setPreserveRatio(true);
+            mainimgview.toBack();
+            StackPane.setAlignment(mainimgview, Pos.CENTER);
             rectangle.setVisible(true);
             smallimgview.setFitHeight(mainimgview.getImage().getHeight()/10);
             smallimgview.setFitWidth(mainimgview.getImage().getWidth()/10);
             rectangle.setHeight(smallimgview.getFitHeight());
             rectangle.setWidth(smallimgview.getFitWidth());
-            smallScaleX = smallimgview.getFitWidth()/mainimgview.getImage().getWidth();
-            smallScaleY = smallimgview.getFitHeight()/mainimgview.getImage().getHeight();
+            smallScaleX = smallimgview.getFitWidth()/mainimgview.getFitWidth();
+            smallScaleY = smallimgview.getFitHeight()/(mainimgview.getFitWidth()/mainimgview.getImage().getWidth()*mainimgview.getImage().getHeight());
 
         }
         catch (MalformedURLException ex){
@@ -81,8 +89,8 @@ public class Controller {
     public void handleMouseClick(MouseEvent event){
         orgSceneX = event.getSceneX();
         orgSceneY = event.getSceneY();
-        orgTranslateX = ((ImageView)(event.getSource())).getTranslateX();
-        orgTranslateY = ((ImageView)(event.getSource())).getTranslateY();
+        orgTranslateX = mainimgview.getTranslateX();
+        orgTranslateY = mainimgview.getTranslateY();
         rectorgTranslateX = rectangle.getTranslateX();
         rectorgTranslateY = rectangle.getTranslateY();
 
@@ -93,13 +101,18 @@ public class Controller {
         double offsetY = event.getSceneY() - orgSceneY;
         double newTranslateX = orgTranslateX + offsetX;
         double newTranslateY = orgTranslateY + offsetY;
-        double rectnewTranslateX = rectorgTranslateX - offsetX*smallScaleX;
-        double rectnewTranslateY = rectorgTranslateY - offsetY*smallScaleY;
+        double rectnewTranslateX = rectorgTranslateX - offsetX*smallScaleX*(1/mainimgview.getScaleX());
+        double rectnewTranslateY = rectorgTranslateY - offsetY*smallScaleY*(1/mainimgview.getScaleX());
 
-        ((ImageView)(event.getSource())).setTranslateX(newTranslateX);
-        ((ImageView)(event.getSource())).setTranslateY(newTranslateY);
-        rectangle.setTranslateX(rectnewTranslateX);
-        rectangle.setTranslateY(rectnewTranslateY);
+        if (rectangle.getWidth()<smallimgview.getFitWidth() &&
+            960-(mainimgview.getImage().getWidth()/2*mainimgview.getScaleX()-Math.abs(newTranslateX))<=0 &&
+            540-(mainimgview.getImage().getHeight()/2*mainimgview.getScaleY()-Math.abs(newTranslateY))<=0){
+
+                mainimgview.setTranslateX(newTranslateX);
+                mainimgview.setTranslateY(newTranslateY);
+                rectangle.setTranslateX(rectnewTranslateX);
+                rectangle.setTranslateY(rectnewTranslateY);
+        }
 
     }
 
@@ -109,20 +122,34 @@ public class Controller {
             mainimgview.setScaleY(mainimgview.getScaleY()*1.25);
             rectangle.setWidth(rectangle.getWidth()*0.8);
             rectangle.setHeight(rectangle.getHeight()*0.8);
+            zoomslider.setValue(mainimgview.getScaleX());
         }
-        else if(rectangle.getWidth()*1.25 <= smallimgview.getFitWidth()){
+        else if(1.25*rectangle.getWidth() <= smallimgview.getFitWidth()){
             mainimgview.setScaleX(mainimgview.getScaleX()*0.8);
             mainimgview.setScaleY(mainimgview.getScaleY()*0.8);
             rectangle.setWidth(rectangle.getWidth()*1.25);
             rectangle.setHeight(rectangle.getHeight()*1.25);
+            zoomslider.setValue(mainimgview.getScaleX());
         }
         else {
+            mainimgview.setTranslateX(0);
+            mainimgview.setTranslateY(0);
+            rectangle.setTranslateX(0);
+            rectangle.setTranslateY(0);
             mainimgview.setScaleX(1);
             mainimgview.setScaleY(1);
             rectangle.setWidth(smallimgview.getFitWidth());
             rectangle.setHeight(smallimgview.getFitHeight());
+            zoomslider.setValue(mainimgview.getScaleX());
         }
 
+    }
+
+    public void handleSlider(){
+        mainimgview.setScaleX(zoomslider.getValue());
+        mainimgview.setScaleY(zoomslider.getValue());
+        rectangle.setWidth(1/zoomslider.getValue());
+        rectangle.setHeight(1/zoomslider.getValue());
     }
 
     public void handleExitbtn(){
