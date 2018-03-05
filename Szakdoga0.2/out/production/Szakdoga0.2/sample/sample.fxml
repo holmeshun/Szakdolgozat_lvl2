@@ -11,9 +11,12 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.control.Slider?>
-<?import javafx.scene.control.Spinner?>
-<StackPane xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller" onMouseDragged="#handleMouseDrag" onMousePressed="#handleMouseClick" onScroll="#handleScroll">
+<?import javafx.scene.canvas.Canvas?>
+<StackPane xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller" onMouseDragged="#handleMouseDrag" onMousePressed="#handleMouseClick" onScroll="#handleScroll"
+ onMouseReleased="#handleMouseReleased">
     <ImageView fx:id="mainimgview" />
+    <Canvas fx:id="drawcanvas" width="1000" height="820" >
+    </Canvas>
     <BorderPane >
         <top>
             <HBox spacing="10" >
@@ -36,6 +39,7 @@
                     <Rectangle fx:id="rectangle" width="128" height="72" />
                 </StackPane>
                 <Slider fx:id="zoomslider" max="28" min="1" orientation="VERTICAL" onMouseDragged="#handleSlider" showTickMarks="true" showTickLabels="true"/>
+                <Button fx:id="drawbutton" text="drawOnOff" onAction="#handleDrawMode"/>
             </VBox>
         </left>
     </BorderPane>
